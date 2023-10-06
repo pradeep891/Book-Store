@@ -11,7 +11,7 @@ const Home = () => {
     axios
       .get("http://localhost:5555/books")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setData(response.data);
         setLoading(false); // Set loading to false when data is received successfully
       })
@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <div>
       <h2>List of Books</h2>
-
+      <Link to={`/books/create`}>Add a new book</Link>
       <table>
         <thead>
           <tr>
@@ -51,9 +51,9 @@ const Home = () => {
               <th> {book.author}</th>
               <th> {book.publishYear}</th>
               <th>
-                <Link to={`/books/details/${book.id}`}>Details</Link>
-                <Link to={`/books/edit/${book.id}`}>Edit</Link>
-                <Link to={`/books/delete/${book.id}`}>Delete</Link>
+                <Link to={`/books/details/${book._id}`}>Details</Link>
+                <Link to={`/books/edit/${book._id}`}>Edit</Link>
+                <Link to={`/books/delete/${book._id}`}>Delete</Link>
               </th>
             </tr>
           ))}

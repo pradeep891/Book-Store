@@ -5,7 +5,7 @@ const CreateBooks = () => {
  
   return (
     <div>
-    {/* Render your component using the data */}
+    Create a new book (fill all the details)
   </div>
   )
 }
