@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -31,6 +32,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navbar />
       <h2>List of Books</h2>
       <Link to={`/books/create`}>Add a new book</Link>
       <table>
