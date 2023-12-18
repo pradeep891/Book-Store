@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/navbar";
+import { Link } from "react-router-dom";
 
 const CreateBooks = () => {
   const [loading, setLoading] = useState(true);
@@ -39,34 +41,50 @@ const CreateBooks = () => {
   };
 
   return (
-    <div>
-      <h1>Add a new book</h1>
-      <div>
-        <strong>Title:</strong>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+    <>
+      <Navbar />
+      <Link to="/" class="btn btn-primary ">
+        Go Back
+      </Link>
+
+      <div className="container mw-50 mt-5" style={{ maxWidth: "700px" }}>
+        <div>
+          <h1 className="text-center">Enter Details</h1>
+
+          <div className="mb-3">
+            <label class="form-label">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              class="form-control"
+            />
+          </div>
+          <div className="mb-3">
+            <label class="form-label">Author</label>
+            <input
+              class="form-control"
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label class="form-label">Publish Year</label>
+            <input
+              class="form-control"
+              type="text"
+              value={publishYear}
+              onChange={(e) => setPublishYear(e.target.value)}
+            />
+          </div>
+
+          <button onClick={handleCreateBook} class="btn btn-primary">
+            Save
+          </button>
+        </div>
       </div>
-      <div>
-        <strong>Author:</strong>
-        <input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-      </div>
-      <div>
-        <strong>Publish Year:</strong>
-        <input
-          type="text"
-          value={publishYear}
-          onChange={(e) => setPublishYear(e.target.value)}
-        />
-      </div>
-      <button onClick={handleCreateBook}>Save</button>
-    </div>
+    </>
   );
 };
 
