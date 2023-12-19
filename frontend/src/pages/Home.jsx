@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
+import "../css/Home.css";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -33,34 +34,50 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <h2>List of Books</h2>
-      <Link to={`/books/create`}>Add a new book</Link>
-      <table>
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publish Year</th>
-            <th>Operations</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((book, index) => (
-            <tr key={book._id}>
-              <th>{index + 1}</th>
-              <th>{book.title}</th>
-              <th> {book.author}</th>
-              <th> {book.publishYear}</th>
-              <th>
-                <Link to={`/books/details/${book._id}`}>Details</Link>
-                <Link to={`/books/edit/${book._id}`}>Edit</Link>
-                <Link to={`/books/delete/${book._id}`}>Delete</Link>
-              </th>
+      <div className="p-2" style={{ backgroundColor: "#EDE9D5" }}>
+        <span>Want to add some more book? </span>
+        <Link to={`/books/create`} className="btn btn-primary">
+          Add now
+        </Link>
+      </div>
+      <h2 style={{ color: "#0766AD", textAlign: "center", margin: "30px" }}>
+        List of all Books
+      </h2>
+      <div
+        className="container p-4"
+        style={{
+          maxWidth: "1000px",
+          backgroundColor: "#EEF5FF",
+          borderRadius: "40px",
+        }}
+      >
+        <table className="table alternate-columns text-center">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Publish Year</th>
+              <th>Operations</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((book, index) => (
+              <tr key={book._id}>
+                <th>{index + 1}</th>
+                <th>{book.title}</th>
+                <th> {book.author}</th>
+                <th> {book.publishYear}</th>
+                <th>
+                  <Link to={`/books/details/${book._id}`}>Details</Link>
+                  <Link to={`/books/edit/${book._id}`}>Edit</Link>
+                  <Link to={`/books/delete/${book._id}`}>Delete</Link>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
