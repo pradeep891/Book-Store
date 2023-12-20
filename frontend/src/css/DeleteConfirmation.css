@@ -1,0 +1,14 @@
+.confirmation-dialog {
+    position: fixed;
+    top: 30%; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+  }
+  
+  .card {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  

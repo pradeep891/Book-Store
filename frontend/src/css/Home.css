@@ -5,3 +5,13 @@ thead {
 tbody tr{
     color:darkmagenta
 }
+
+.link-styled {
+    text-decoration: none;
+    color: inherit;
+    margin: 3px;
+}
+
+.link-styled:hover {
+    color: red;
+}

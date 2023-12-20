@@ -3,6 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../css/Home.css";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InfoIcon from '@mui/icons-material/Info';
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -69,9 +72,9 @@ const Home = () => {
                 <th> {book.author}</th>
                 <th> {book.publishYear}</th>
                 <th>
-                  <Link to={`/books/details/${book._id}`}>Details</Link>
-                  <Link to={`/books/edit/${book._id}`}>Edit</Link>
-                  <Link to={`/books/delete/${book._id}`}>Delete</Link>
+                  <Link to={`/books/details/${book._id}`} className="link-styled"> <InfoIcon/> </Link>
+                  <Link to={`/books/edit/${book._id}`} className="link-styled"> <EditIcon/> </Link>
+                  <Link to={`/books/delete/${book._id}`} className="link-styled"> <DeleteIcon/> </Link>
                 </th>
               </tr>
             ))}
