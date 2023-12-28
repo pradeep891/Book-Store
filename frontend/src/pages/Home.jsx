@@ -11,11 +11,13 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Number of items to display per page
 
   useEffect(() => {
     axios
       .get("http://localhost:5555/books")
-      .then((response) => {
+            .then((response) => {
         // console.log(response.data);
         setData(response.data);
         setLoading(false); // Set loading to false when data is received successfully
@@ -24,7 +26,20 @@ const Home = () => {
         setError(error); // Set error state if the request fails
         setLoading(false); // Set loading to false even if there is an error
       });
-  }, []); // The empty dependency array means this effect runs once after the initial render
+  }, [currentPage, itemsPerPage]); // The empty dependency array means this effect runs once after the initial render
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(1); // Reset to page 1 when changing items per page
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -65,9 +80,9 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((book, index) => (
+            {data.slice(itemsPerPage*(currentPage -1 ) , itemsPerPage*currentPage).map((book, index) => (
               <tr key={book._id}>
-                <th>{index + 1}</th>
+                <th>{itemsPerPage*(currentPage -1 ) + index + 1 }</th>
                 <th>{book.title}</th>
                 <th> {book.author}</th>
                 <th> {book.publishYear}</th>
@@ -80,6 +95,32 @@ const Home = () => {
             ))}
           </tbody>
         </table>
+
+        {/* //rows per page */}
+        <div className="d-inline-block mb-3">
+                <span className="me-2">Rows per page: </span>
+                <select className="form-select-sm" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+        </div>
+
+        {/* pagination code */}
+        <div className="d-flex justify-content-center my-4">
+          <button
+            className="btn btn-primary me-2"
+            onClick={prevPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="align-self-center">Page {currentPage}</span>
+          <button className="btn btn-primary ms-2" onClick={nextPage}>
+            Next
+          </button>
+        </div>
+
       </div>
     </div>
   );
