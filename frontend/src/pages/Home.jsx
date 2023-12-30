@@ -12,6 +12,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Number of items to display per page
   const [sortType, setSortType] = useState('title');
 
@@ -34,6 +35,7 @@ const Home = () => {
         };
         sortArray(sortType);
         setLoading(false); // Set loading to false when data is received successfully
+        setLastPage(Math.ceil(data.length / itemsPerPage));
       })
       .catch((error) => {
         setError(error); // Set error state if the request fails
@@ -143,7 +145,7 @@ const Home = () => {
             Previous
           </button>
           <span className="align-self-center">Page {currentPage}</span>
-          <button className="btn btn-primary ms-2" onClick={nextPage}>
+          <button className="btn btn-primary ms-2" onClick={nextPage} disabled={currentPage === lastPage}>
             Next
           </button>
         </div>
