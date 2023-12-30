@@ -15,6 +15,7 @@ const Home = () => {
   const [lastPage, setLastPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Number of items to display per page
   const [sortType, setSortType] = useState('title');
+  const [sortOrder, setSortOrder] = useState('ascending');
 
   useEffect(() => {
     axios
@@ -31,6 +32,7 @@ const Home = () => {
           } else if (value === "publishYear") {
             sortedData.sort((a, b) => a.publishYear - b.publishYear);
           }    
+          if(sortOrder === 'descending') sortedData.reverse();
           setData(sortedData);
         };
         sortArray(sortType);
@@ -41,7 +43,7 @@ const Home = () => {
         setError(error); // Set error state if the request fails
         setLoading(false); // Set loading to false even if there is an error
       });
-  }, [currentPage, itemsPerPage, sortType]); // The empty dependency array means this effect runs once after the initial render
+  }, [currentPage, itemsPerPage, sortType, sortOrder]); // The empty dependency array means this effect runs once after the initial render
 
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -95,6 +97,13 @@ const Home = () => {
             <option value="title">Title</option>
             <option value="author">Author</option>
             <option value="publishYear">Publish Year</option>
+          </select>
+          <select onChange={(e) => {
+            setSortOrder(e.target.value);
+            setCurrentPage(1);
+          }}  className="form-select-sm" value={sortOrder}>
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
           </select>
         </div>
 
