@@ -13,20 +13,33 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Number of items to display per page
+  const [sortType, setSortType] = useState('title');
 
   useEffect(() => {
     axios
       .get("http://localhost:5555/books")
             .then((response) => {
         // console.log(response.data);
-        setData(response.data);
+        const sortArray = value => {
+          let sortedData = [...response.data]; // Create a copy of the original data
+          // console.log("Sorted data " , sortedData)
+          if (value === "author") {
+            sortedData.sort((a, b) => a.author.localeCompare(b.author));
+          } else if (value === "title") {
+            sortedData.sort((a, b) => a.title.localeCompare(b.title));
+          } else if (value === "publishYear") {
+            sortedData.sort((a, b) => a.publishYear - b.publishYear);
+          }    
+          setData(sortedData);
+        };
+        sortArray(sortType);
         setLoading(false); // Set loading to false when data is received successfully
       })
       .catch((error) => {
         setError(error); // Set error state if the request fails
         setLoading(false); // Set loading to false even if there is an error
       });
-  }, [currentPage, itemsPerPage]); // The empty dependency array means this effect runs once after the initial render
+  }, [currentPage, itemsPerPage, sortType]); // The empty dependency array means this effect runs once after the initial render
 
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -61,6 +74,7 @@ const Home = () => {
       <h2 style={{ color: "#0766AD", textAlign: "center", margin: "30px" }}>
         List of all Books
       </h2>
+
       <div
         className="container p-4"
         style={{
@@ -69,6 +83,19 @@ const Home = () => {
           borderRadius: "40px",
         }}
       >
+
+        <div className="d-inline-block mb-3">
+          <span className="me-2">Sort by: </span>
+          <select onChange={(e) => {
+            setSortType(e.target.value);
+            setCurrentPage(1);
+          }}  className="form-select-sm" value={sortType}>
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="publishYear">Publish Year</option>
+          </select>
+        </div>
+
         <table className="table alternate-columns text-center">
           <thead>
             <tr>
